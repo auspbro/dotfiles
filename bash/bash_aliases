@@ -1,0 +1,325 @@
+#########################################################
+# below is my aliases and functions
+#########################################################
+
+## directory start
+alias ..='cd ..'
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias .6='cd ../../../../../..'
+alias -- -='cd -'
+
+alias ws='cd ~/WS'
+alias shm='cd /dev/shm'
+alias tmp='cd /tmp'
+alias p='cd ~/Program'
+alias cdl='cd ~/Downloads'
+alias cdt='cd ~/Desktop'
+## directory end
+
+## file access start
+alias l1='ls -1'
+alias lss="ls | xargs -i du -sh ./{} | sort -rh"
+alias lsr="ls -R | grep :$ | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+alias lsd="ls -d */"
+
+function mcd() {
+    mkdir -p "$1"
+    cd "$1"
+}
+
+function cdl() {
+    cd "$1"
+    ls
+}
+
+function ch2mine() {
+    if [ $# -eq 0 ]; then
+        sudo chown -R ${USER}.${USER} .
+    else
+        sudo chown -R ${USER}.${USER} $@
+    fi
+}
+
+function extract_rpm() {
+    local current=$(pwd)
+    local absfile=$(realpath $1)
+    mcd `basename "${absfile}" | sed 's/\.rpm$//'`
+    rpm2cpio "${absfile}" | cpio -div
+    cd "${current}"
+}
+
+function extract_deb() {
+    local current=$(pwd)
+    local absfile=$(realpath $1)
+    mcd `basename "${absfile}" | sed 's/\.deb$//'`
+    dpkg-deb -X "${absfile}" .
+    cd "${current}"
+}
+
+function extract_jar() {
+    local current=$(pwd)
+    local absfile=$(realpath $1)
+    mcd `basename ${absfile} | sed 's/\.jar$//'`
+    jar -xvf "${absfile}"
+    cd ${current}
+}
+
+function ext() {
+    for i in "$@"; do
+        if [ -f "${i}" ] ; then
+          case "${i}" in
+            *.tar.bz2)   tar xjvf "${i}"     ;;
+            *.tar.gz)    tar xzvf "${i}"     ;;
+            *.tar.xz)    xz -d "${i}" && tar xvf $(echo ${i} | sed 's/\.xz$//' ) ;;
+            *.bz2)       bunzip2 "${i}"      ;;
+            *.rar)       unrar e "${i}"      ;;
+            *.gz)        gunzip "${i}"       ;;
+            *.tar)       tar xvf "${i}"      ;;
+            *.tbz2)      tar xjvf "${i}"     ;;
+            *.tgz)       tar xzvf "${i}"     ;;
+            *.zip)       unzip "${i}"        ;;
+            *.Z)         uncompress "${i}"   ;;
+            *.7z)        7z x "${i}"         ;;
+            *.xz)        xz -d "${i}"        ;;
+            *.rpm)       extract_rpm "${i}"  ;;
+            *.deb)       extract_deb "${i}"  ;;
+            *.apk)       apktool -f d "${i}" ;;
+            *.jar)       extract_jar "${i}"  ;;
+            *)     echo "'${i}' cannot be extracted via extract()";;
+             esac
+         else
+             echo "'${i}' is not a valid file"
+         fi
+     done
+}
+
+## : Ctrl+V, Ctrl+M
+alias mydos2unix='sed -i "s///g"'
+
+alias vi='vim'
+alias svi='sudo vim'
+alias rm='rm -I --preserve-root'
+alias tf='tail -f'
+alias mysync='rsync -avrz --delete --progress'
+alias rsync-copy="rsync -avz --progress -h"
+alias rsync-move="rsync -avz --progress -h --remove-source-files"
+alias rsync-update="rsync -avzu --progress -h"
+alias rsync-synchronize="rsync -avzu --delete --progress -h"
+alias diff-patch='diff -Nuar'
+
+function egr() {
+    egrep "$@" -Rn .
+}
+## file access end
+
+
+##### Color Start #####
+## echo -e "${Blu}blue ${Red}red ${RCol}etc...."
+RCol='\e[0m'    # Text Reset
+
+# Regular           Bold                Underline           High Intensity      BoldHigh Intens     Background          High Intensity Backgrounds
+Bla='\e[0;30m';     BBla='\e[1;30m';    UBla='\e[4;30m';    IBla='\e[0;90m';    BIBla='\e[1;90m';   On_Bla='\e[40m';    On_IBla='\e[0;100m';
+Red='\e[0;31m';     BRed='\e[1;31m';    URed='\e[4;31m';    IRed='\e[0;91m';    BIRed='\e[1;91m';   On_Red='\e[41m';    On_IRed='\e[0;101m';
+Gre='\e[0;32m';     BGre='\e[1;32m';    UGre='\e[4;32m';    IGre='\e[0;92m';    BIGre='\e[1;92m';   On_Gre='\e[42m';    On_IGre='\e[0;102m';
+Yel='\e[0;33m';     BYel='\e[1;33m';    UYel='\e[4;33m';    IYel='\e[0;93m';    BIYel='\e[1;93m';   On_Yel='\e[43m';    On_IYel='\e[0;103m';
+Blu='\e[0;34m';     BBlu='\e[1;34m';    UBlu='\e[4;34m';    IBlu='\e[0;94m';    BIBlu='\e[1;94m';   On_Blu='\e[44m';    On_IBlu='\e[0;104m';
+Pur='\e[0;35m';     BPur='\e[1;35m';    UPur='\e[4;35m';    IPur='\e[0;95m';    BIPur='\e[1;95m';   On_Pur='\e[45m';    On_IPur='\e[0;105m';
+Cya='\e[0;36m';     BCya='\e[1;36m';    UCya='\e[4;36m';    ICya='\e[0;96m';    BICya='\e[1;96m';   On_Cya='\e[46m';    On_ICya='\e[0;106m';
+Whi='\e[0;37m';     BWhi='\e[1;37m';    UWhi='\e[4;37m';    IWhi='\e[0;97m';    BIWhi='\e[1;97m';   On_Whi='\e[47m';    On_IWhi='\e[0;107m';
+##### Color End #####
+
+
+
+## system start
+alias _='sudo'
+alias h='history'
+alias c="clear"
+alias fu='sudo fuser -mv'
+
+function sys-info() {
+    if ( type lsb_release &> /dev/null ); then
+        echo "OS: $(lsb_release -ds)"
+    fi
+    echo "CPU: $(lscpu | grep 'Model name' | sed 's/^.*:\W*//')"
+    echo "Kernel: $(uname -r)"
+    echo "Memory: $(free -h | grep 'Mem:' | awk '{print $2}')"
+    echo -e "\nDisk: \n$(lsblk -e 7)\n"
+    echo "Hostname: $(hostname)"
+    echo "Date: $(date)"
+    # echo ": $()"
+}
+
+function env-gcc() {
+    cat<< EOF
+export C_INCLUDE_PATH=/usr/include:\${C_INCLUDE_PATH}
+export CPP_INCLUDE_PATH=/usr/include:\${CPP_INCLUDE_PATH}
+export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:\${PKG_CONFIG_PATH}
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:\${LIBRARY_PATH}
+export LD_LIBRARY_PATH=/usr/lib64\${LD_LIBRARY_PATH}
+EOF
+}
+
+function mount-show() {
+    cat<< EOF
+## umount
+sudo fuser -mv /mnt
+
+mount --bind /test1 /test2
+mount -t cifs //example.com/share /mnt/ -o user=USER,passwd=PASSWD
+
+## yum install -y ntfs-3g
+## apt install -y exfat-util
+mount /dev/sdc /mnt
+
+## mount loop
+losetup /dev/loop0 VirtualMachineImage.raw
+kpartx -a /dev/loop0
+kpartx -l /dev/loop0
+mount /dev/mapper/loop0p1 /mnt
+
+## umount loop
+unmount /mnt
+kpartx -d /dev/loop0
+losetup -d /dev/loop
+
+## virtual file system
+mount -t proc none /mnt
+mount -t tmpfs -o size=64m none /mnt
+
+## samba
+smbclient //example.com/share -U USER%PASSWD
+
+## apt install -y sshfs
+sshfs user@example.com:/home/user/WS /mnt/
+
+## workdir needs to be an empty directory
+# /upper
+# /lower1
+# /lower2
+# /lower3
+mount -t overlay overlay -o lowerdir=/lower1:/lower2:/lower3,upperdir=/upper,workdir=/work /merged
+EOF
+}
+
+## system end
+
+## Process start
+alias psg="ps aux | grep -v grep | grep"
+alias path='echo -e ${PATH//:/\\n}'
+alias ld-path='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+alias watch-cpu="watch -n1 'ps aux | grep -v PID | sort -nrk +3 | head -25'"
+alias watch-mem="watch -d -n1 'ps aux | grep -v PID | sort -nrk +4 | head -25'"
+alias lib-gcc-version='objdump --full-contents --section=.comment'
+## Process end
+
+## disk start
+function lvm-show() {
+cat << EOF
+## Physical Volume
+pvcreate /dev/sdb1
+pvdisplay
+pvremove /dev/sdb1
+
+## Volume Group
+vgcreate volume-group1 /dev/sdb1 /dev/sdb2
+vgdisplay
+vgextend volume-group1 /dev/sdb3
+vgremove volume-group1
+
+pvs
+vgs -v
+vgrename PzOElX-4jRk-JCL4-8dJx-t7c0-7xOl-oeyjwM centos-xxx
+pvs
+
+## Logical Volume
+lvcreate -L 100M -n lv1 volume-group1
+lvdisplay
+lvscan
+lvresize -l +884 /dev/volume-group1/lv
+
+resize2fs /dev/volume-group1/lv1
+
+e2fsck /dev/volume-group1/lv1
+e2fsck -f /dev/volume-group1/lv1
+
+## format
+mkfs.ext4 /dev/volume-group1/lv1
+mount /dev/volume-group1/lv1 /mnt/
+
+## mount
+lvdisplay
+lvchange -ay /dev/centos/home
+mount /dev/centos/home /mnt
+EOF
+}
+## disk end
+
+## search start
+alias findn='find . -iname '
+alias findg='find . | grep -i '
+alias find-max-file='find . -type f -exec du -s {} \; | sort -rnk 1 | head'
+alias grep='grep --color --binary-files=without-match'
+alias egrep='egrep --color --binary-files=without-match'
+alias gr='grep -rn'
+alias egr='egrep -rn'
+## search end
+
+
+## network start
+alias wget='wget -c --no-check-certificate'
+alias wget-all='wget --no-check-certificate -c -r -np -k -L -p -nc'
+# alias wget-all='wget --no-check-certificate -c -r -np -nd -k -L -p -nc'
+alias ports='netstat -tulanp'
+
+function myip() {
+    ip addr | grep -w 'inet' | grep -v '127.0.0.1' | sed -e 's/.*inet //' -e 's/\/.*$//g'
+}
+
+function port-is-open() {
+    local url=$1
+    local host=${url%:*}
+    local port=${url#*:}
+    if ( type nc &> /dev/null ); then
+         ## apt install -y nc
+         nc -zv ${host} ${port}
+    elif ( type ncat &> /dev/null ); then
+         ## yum install -y nmap-ncat
+         ncat -zv ${host} ${port}
+    else
+        echo 'please install nc or nmap-ncat'
+    fi
+}
+
+function port-opened() {
+    if ( type nmap &> /dev/null ); then
+        if [ "$#" -eq "0" ]; then
+            nmap --reason $(hostname)
+        else
+            nmap --reason $@
+        fi
+    else
+        echo 'please install nmap'
+        return 128
+    fi
+}
+
+
+alias sock5="ssh -D *:5555 -q -C -N ${USER}@${HOSTNAME}"
+
+# alias www='python -m SimpleHTTPServer 8888'
+function www() {
+    local port=$1
+    if [ -z ${port} ]; then
+        port=8888
+    fi
+    if ( type python3 &> /dev/null ); then
+        python3 -m http.server ${port}
+    else
+        python -m SimpleHTTPServer ${port}
+    fi
+}
+

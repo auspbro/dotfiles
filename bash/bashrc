@@ -1,0 +1,24 @@
+
+SCHEME1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;35;35m\]\W\[\033[00m\]\$ "
+SCHEME2="\[\e[01;35m\]\u@\h\[\e[01;31m\]\$\[\e[01;36m\][\W]\[\e[01;35m\]\\$\[\e[00m\] "
+SCHEME3="\[\e[01;32m\]\u\[\e[01;31m\]\$\[\e[01;36m\][\W]\[\e[01;32m\] =>\[\e[00m\] "
+SCHEME4="\[\e[01;36m\][\[\e[01;35m\]\u\[\e[01;31m\]@\[\e[01;35m\]\h \[\e[01;36m\]\W]\[\e[01;35m\]\$\[\e[00m\] "
+SCHEME5="\[\e[01;36m\][\[\e[01;32m\]\u\[\e[01;31m\]@\[\e[01;32m\]\h \[\e[01;36m\]\W]\[\e[01;32m\]\$\[\e[00m\] "
+SCHEME6="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[36;40m\]\W\[\e[0m\]]\\$ "
+export PS1=$SCHEME6
+export EDITOR="vim"
+export SYSTEMD_EDITOR=vim
+
+if [ "$TERM" == "xterm" ]; then
+    export TERM=xterm-256color
+fi
+
+AUTOJUMP_CONF_FILE=/usr/share/autojump/autojump.bash
+if [ -f ${AUTOJUMP_CONF_FILE} ]; then
+    source ${AUTOJUMP_CONF_FILE}
+fi
+
+alias ls='ls --color=auto'
+alias ll='ls --color=auto -l'
+alias l='ls --color=auto -lA'
+alias lla='ls --color=auto -la'
