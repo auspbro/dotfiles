@@ -29,7 +29,7 @@ source ~/.bashrc && bash ~/.bin/init.sh
 Init config by running:
 ```bash
 GITHUB_USERNAME=auspbro bash -c \
-"$(curl -fsSL https://raw.githubusercontent.com/dotfiles/refs/heads/main/.bin/bootstrap-all.sh)"
+"$(curl -fsSL https://raw.githubusercontent.com/dotfiles/refs/heads/main/.bin/bootstrap.sh)"
 ```
 
 ### Git-free install
