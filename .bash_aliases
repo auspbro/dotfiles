@@ -20,38 +20,6 @@ alias lss="ls | xargs -i du -sh ./{} | sort -rh"
 alias lsr="ls -R | grep :$ | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias lsd="ls -d */"
 
-# Setting proxy for current shell session.
-setup_proxy() {
-    if [ -z "$1" ]; then
-    echo "Usage: setup_proxy PROXY_URL [NO_PROXY_LIST]"
-    return 1
-    fi
-
-    local PROXY="$1"
-    # default no_proxy list if not provided
-    local NO_PROXY="${2:-localhost,127.0.0.1,::1}"
-
-    # Export standard environment variables
-    export http_proxy="$PROXY"
-    export https_proxy="$PROXY"
-    export ftp_proxy="$PROXY"
-    export all_proxy="$PROXY"
-    export HTTP_PROXY="$PROXY"
-    export HTTPS_PROXY="$PROXY"
-    export FTP_PROXY="$PROXY"
-    export ALL_PROXY="$PROXY"
-    export no_proxy="$NO_PROXY"
-    export NO_PROXY="$NO_PROXY"
-
-    # Configure Git Proxy
-    if command -v git &> /dev/null; then
-        git config --global http.proxy  "$PROXY"
-        git config --global https.proxy "$PROXY"
-    fi
-    
-}
-# setup_proxy http://proxy.com:port "localhost,127.0.0.1,"
-
 
 function ext() {
     for i in "$@"; do

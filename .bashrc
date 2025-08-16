@@ -92,7 +92,7 @@ fi
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='ls -l'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -138,3 +138,5 @@ if [ -f ~/.extra ]; then
 fi
 
 export LS_COLORS=$(echo $LS_COLORS | sed 's/ow=[0-9;]*/ow=01;34/')
+# Set neovim path
+export PATH="$HOME/.local/bin:$PATH"
