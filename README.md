@@ -1,4 +1,4 @@
-# Dotfiles for @xuex1x
+# Dotfiles for @auspbro
 **Warning:** These are my preferred settings. Use at your own risk!
 
 - Setting up the dotfiles repository as a bare repo with `Git`! No extra tooling, no symlinks, files are tracked on a version control system. 
@@ -16,7 +16,7 @@ Requirements:
 
 Clone and install config tracking in your $HOME by running:
 ```bash
-curl -Lks https://raw.githubusercontent.com/xuex1x/dotfiles/refs/heads/main/.bin/bootstrap-dotfiles.sh | /bin/bash
+curl -Lks https://raw.githubusercontent.com/auspbro/dotfiles/refs/heads/main/.bin/bootstrap-dotfiles.sh | /bin/bash
 ```
 
 To initilazition more (git, tmux, neovim, lazyvim, zsh/z4h, )
@@ -28,7 +28,7 @@ source ~/.bashrc && bash ~/.bin/init.sh
 
 Init config by running:
 ```bash
-GITHUB_USERNAME=xuex1x bash -c \
+GITHUB_USERNAME=auspbro bash -c \
 "$(curl -fsSL https://raw.githubusercontent.com/dotfiles/refs/heads/main/.bin/bootstrap-all.sh)"
 ```
 
@@ -38,7 +38,7 @@ To install these dotfiles without Git. To update later on, just run that command
 
 
 ```bash
-cd; curl -#L https://github.com/xuex1x/dotfiles/tarball/main | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh,LICENSE-MIT.txt}
+cd; curl -#L https://github.com/auspbro/dotfiles/tarball/main | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh,LICENSE-MIT.txt}
 ```
 
 You don't need to run Zsh for Humans installer on a new machine. Simply copy/restore these files and Zsh for Humans will bootstrap itself. If you don't have zsh on the machine, you can bootstrap Zsh for Humans from any Bourne-based shell with the following command:
@@ -57,7 +57,7 @@ My `~/.extra` looks something like this:
 ```bash
 # Git credentials
 # Not in the repository, to prevent people from accidentally committing under my name
-GIT_AUTHOR_NAME="xuex1x"
+GIT_AUTHOR_NAME="auspbro"
 GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
 git config --global user.name "$GIT_AUTHOR_NAME"
 GIT_AUTHOR_EMAIL="test@xx.com"
@@ -86,7 +86,7 @@ echo "alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'"
 I packaged the above lines into a [snippet](https://bitbucket.org/snippets/nicolapaolucci/ergX9) up on Bitbucket and linked it from a short-url. So that you can set things up with:
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/xuex1x/dotfiles/refs/heads/main/bootstrap.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/auspbro/dotfiles/refs/heads/main/bootstrap.sh)"
 ```
 
 After you've executed the setup any file within the `$HOME` folder can be versioned with normal commands, replacing `git` with your newly created `dot` alias, like:
@@ -198,7 +198,7 @@ These steps allow you to recreate the whole WSL environment. Before proceeding, 
 - Type this (change the value of `GITHUB_USERNAME` if it's not the same as your WSL username):
 ```bash
 GITHUB_USERNAME=$USER bash -c \
-  "$(curl -fsSL 'https://raw.githubusercontent.com/xuex1x/dotfiles-public/refs/heads/main/bin/bootstrap-machine.sh')"
+  "$(curl -fsSL 'https://raw.githubusercontent.com/auspbro/dotfiles-public/refs/heads/main/bin/bootstrap-machine.sh')"
 ```
 - Say `Yes` when prompted to terminate WSL.
 - Run *Start > Windows Terminal*.

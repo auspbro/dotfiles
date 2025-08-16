@@ -33,7 +33,7 @@ setup_dotfiles_repo() {
         info "Dotfiles repository already exists at $HOME/.dotfiles. Skipping clone."
     else
         # Replace with your actual repository URL
-        if ! git clone --bare https://github.com/xuex1x/dotfiles.git "$HOME/.dotfiles"; then
+        if ! git clone --bare https://github.com/auspbro/dotfiles.git "$HOME/.dotfiles"; then
             error "Failed to clone the dotfiles repository."
         fi
     fi

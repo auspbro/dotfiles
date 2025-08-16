@@ -4,7 +4,7 @@
 # Clone the dotfiles repository as a bare repo.
 # A bare repository stores the git history but doesn't have a working tree,
 # which is perfect for managing dotfiles in the home directory.
-git clone --bare https://github.com/xuex1x/dotfiles.git $HOME/.dotfiles
+git clone --bare https://github.com/auspbro/dotfiles.git $HOME/.dotfiles
 
 # Define an alias function for git operations on the dotfiles repo.
 # This avoids polluting the global git command and makes commands cleaner.
